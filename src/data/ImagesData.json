@@ -1,0 +1,7 @@
+[
+    {"id": 1, "img": "http://localhost:3000/assets/img/a.jpg"},
+    {"id": 2, "img": "http://localhost:3000/assets/img/b.jpg"},
+    {"id": 3, "img": "http://localhost:3000/assets/img/c.jpg"},
+    {"id": 4, "img": "http://localhost:3000/assets/img/d.jpg"},
+    {"id": 5, "img": "http://localhost:3000/assets/img/e.jpg"}
+]

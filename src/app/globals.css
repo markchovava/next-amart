@@ -2,32 +2,130 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+
+@layer base {
+  h1 { @apply text-[4rem] font-semibold; }
+  h2 { @apply text-[3.5rem] font-semibold; }
+  h3 { @apply text-[3rem] font-semibold; }
+  h4 { @apply text-[2.5rem] font-semibold; }
+  h5 { @apply text-[2rem] font-semibold; }
+  h6 { @apply text-[1.4rem] font-semibold; }
+
+  section { @apply w-[100%]; }
+
+  .container__one{ @apply mx-auto w-[90%] }
+  .container__two{ @apply mx-auto w-[80%] }
+
+  /* NAVIGATION */
+  .nav__li { @apply py-2 px-3 w-[100%] hover:bg-slate-100 cursor-pointer transition-all duration-300 ease-in-out; }
+
+  .btn__one { @apply ease-in-out duration-200 drop-shadow bg-gradient-to-br from-blue-600 to-pink-700 hover:bg-gradient-to-br hover:from-pink-700 transition-all hover:to-blue-600 text-white; }
+
+  .link__blue { @apply ease-in-out duration-200 hover:text-blue-700; }
+  .link__pink { @apply ease-in-out duration-200 hover:text-pink-700; }
+ 
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+
+
+
+
+
+/* Target scrollbars in WebKit/Blink browsers */
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
 }
+
+/* Style scrollbar buttons (optional) */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+
+/* CAROUSEL */
+.swiper-button-next,
+.swiper-button-prev {
+    background-color: transparent;
+    right:10px;
+    padding: 30px;
+    border-radius: 0%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: slategray !important;
+    fill: slategray !important;
+    stroke: slategray !important;
+}
+.swiper-pagination-bullet {
+  background-color: darkslategray !important;
+}
+.swiper-pagination-bullet-active {
+  background-color: black !important;
+}
+
+
+.carousel__two .swiper-button-next,
+.carousel__two .swiper-button-prev {
+    background-color: transparent;
+    right:10px;
+    padding: 30px;
+    border-radius: 0%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: lightgray !important;
+    fill: lightgray !important;
+    stroke: lightgray !important;
+}
+
+.carousel__two .swiper-pagination-bullet {
+  background-color: white !important;
+}
+.carousel__two .swiper-pagination-bullet-active {
+  background-color: black !important;
+}
+
+
+/* TOP CATEGORIES */
+.top__category .swiper-button-next,
+.top__category .swiper-button-prev {
+    background-color: pink;
+    border-radius: 20%;
+    overflow: hidden;
+    right:10px;
+    padding: 30px;
+    border-radius: 0%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: black !important;
+    fill: black !important;
+    stroke: black !important;
+}
+.top__category .swiper-pagination-bullet {
+  background-color: darkslategray !important;
+}
+.top__category .swiper-pagination-bullet-active {
+  background-color: black !important;
+}
+
+
+
+
+
