@@ -1,10 +1,21 @@
 "use client"
+import axiosClientAPI from '@/api/axiosClientAPI';
+import { tokenAuth } from '@/tokens/tokenAuth';
+import { tokenRole } from '@/tokens/tokenRole';
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 import { FaAngleDown } from "react-icons/fa";
+import { Bounce, toast } from 'react-toastify';
+
+
 
 
 export default function TopNav() {
+  const router = useRouter();
+  const { getAuthToken, removeAuthToken } = tokenAuth();
+  const { removeRoleToken } = tokenRole();
+  const [isLogout, setIsLogout] = useState(false);
   const [isActive, setIsActive] = useState({
     one: false,
     two: false,
@@ -13,7 +24,45 @@ export default function TopNav() {
     five: false,
     six: false,
     profile: false,
-  })
+  });
+
+  const config = {
+    headers: {
+        "Content-Type": "multipart/form-data",
+        'Authorization': `Bearer ${getAuthToken()}`, 
+    }
+  }
+
+   /* LOGOUT */
+  async function postLogout() {
+    try{
+        const result = await axiosClientAPI.get(`logout`, config)
+        .then((response) => {
+            removeAuthToken();
+            removeRoleToken();
+            router.push(`/login`) 
+            toast.success(response.data.message, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+            });
+            setIsLogout(false) 
+        
+        })
+    } catch (error) {
+        console.error(`Error: ${error}`)
+    } 
+  } 
+
+  useEffect(() => { 
+      isLogout == true && postLogout();
+  }, [isLogout]);
 
 
   return (
@@ -29,9 +78,11 @@ export default function TopNav() {
             </Link>
             <ul className={`${isActive.one ? 'visible' : 'invisible'} absolute transition-all ease-in-out z-50 border border-white drop-shadow-md top-[100%] w-[150%] bg-gradient-to-br from-blue-600 to-pink-600`}>
               <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
-                <Link href='#'>App Info</Link></li>
+                <Link href='/admin/app-info'>App Info</Link></li>
               <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
                 <Link href='#'>Shop</Link></li>
+              <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
+                <Link href='/admin/role'>Role</Link></li>
               <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
                 <Link href='#'>Settings</Link></li>
             </ul>
@@ -51,7 +102,7 @@ export default function TopNav() {
               <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
                 <Link href='#'>Customers</Link></li>
               <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
-                <Link href='#'>Users</Link></li>
+                <Link href='/admin/user'>Users</Link></li>
             </ul>
           </li>
           {/* PRODUCTS */}
@@ -131,11 +182,16 @@ export default function TopNav() {
             </span>
             <ul className={`${isActive.profile ? 'visible' : 'invisible'} absolute transition-all ease-in-out z-50 border border-white drop-shadow-md top-[100%] right-0 w-[150%] bg-gradient-to-br from-blue-600 to-pink-600`}>
               <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
-                <Link href='#'>Profile</Link></li>
+                <Link href='/admin/profile'>Profile</Link></li>
               <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
-                <Link href='#'>Password</Link></li>
+                <Link href='/admin/password'>Password</Link></li>
               <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
-                <Link href='#'>Signout</Link></li>
+                <Link href='/admin/profile/email'>Email</Link></li>
+              {getAuthToken() &&
+                <li className='px-3 py-1 hover:bg-gradient-to-br hover:from-pink-600 hover:to-blue-600'>
+                  <button onClick={() => setIsLogout(true)}>Signout</button>
+                </li>
+              }
             </ul>
           </li>
         </ul>
